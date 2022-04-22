@@ -1,0 +1,108 @@
+{
+    "makefile.makeDirectory": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox",
+    "makefile.configurations": [
+    {
+        "name": "my_debug",
+        "makeArgs": ["shared=1", "debug=1"]
+    },
+    {
+        "name": "fast_debug",
+        "makeArgs": ["shared=1", "debug=2"]
+    },
+    {
+        "name": "my_release",
+        "makeArgs": ["shared=1"]
+    },
+    {
+        "name": "my_release_single",
+        "makeArgs": []
+    },
+    {
+        "name": "unoptimized_release",
+        "makeArgs": ["shared=1", "debug=3"]
+    }
+    ],
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/my_folder",
+            "binaryPath": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/Fox-nogui",
+            "binaryArgs": [
+                "--my_index",
+                "exp_intervals.txt",
+                "integrals.txt"
+            ]
+        },
+        {
+            "cwd": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/",
+            "binaryPath": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/Fox",
+            "binaryArgs": []
+        },
+    ],
+    "files.associations": {
+        "cmath": "cpp",
+        "iosfwd": "cpp",
+        "array": "cpp",
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "cctype": "cpp",
+        "chrono": "cpp",
+        "clocale": "cpp",
+        "complex": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "initializer_list": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "numeric": "cpp",
+        "ratio": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "thread": "cpp",
+        "type_traits": "cpp",
+        "tuple": "cpp",
+        "typeinfo": "cpp",
+        "utility": "cpp",
+        "csignal": "cpp",
+        "cstdarg": "cpp",
+        "hash_map": "cpp",
+        "strstream": "cpp",
+        "bitset": "cpp",
+        "algorithm": "cpp",
+        "optional": "cpp",
+        "string_view": "cpp",
+        "cfenv": "cpp",
+        "cinttypes": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp",
+        "iterator": "cpp",
+        "map": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "rope": "cpp",
+        "variant": "cpp"
+    },
+    "C_Cpp.dimInactiveRegions": false
+}

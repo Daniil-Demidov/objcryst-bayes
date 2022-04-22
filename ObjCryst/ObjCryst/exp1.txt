@@ -1,0 +1,367 @@
+make[5]: Entering directory '/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/freeglut'
+CDPATH="${ZSH_VERSION+.}:" && cd . && aclocal-1.15 
+ 
+ cd . && automake-1.15 --gnu
+ 
+src/Makefile.am:48: warning: 'INCLUDES' is the old name for 'AM_CPPFLAGS' (or '*_CPPFLAGS')
+
+CDPATH="${ZSH_VERSION+.}:" && cd . && autoconf
+ 
+/bin/sh ./config.status --recheck
+ 
+running CONFIG_SHELL=/bin/sh /bin/sh ./configure --prefix=/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/../../static-libs --disable-shared --disable-warnings --x-includes=/usr/X11R6/include/ --no-create --no-recursion
+ 
+checking for a BSD-compatible install...  
+/usr/bin/install -c
+ 
+checking whether build environment is sane...  
+yes
+ 
+/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/freeglut/missing: Unknown `--is-lightweight' option
+Try `/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/freeglut/missing --help' for more information
+
+configure: WARNING: 'missing' script is too old or missing
+
+checking for a thread-safe mkdir -p...  
+/bin/mkdir -p
+ 
+checking for gawk...  
+no
+ 
+checking for mawk...  
+mawk
+ 
+checking whether make sets $(MAKE)...  
+yes
+ 
+checking whether make supports nested variables...  
+yes
+ 
+checking for gcc...  
+gcc
+ 
+checking whether the C compiler works...  
+yes
+checking for C compiler default output file name...  
+a.out
+ 
+checking for suffix of executables...  
+
+ 
+checking whether we are cross compiling...  
+no
+ 
+checking for suffix of object files...  
+o
+checking whether we are using the GNU C compiler...  
+yes
+ 
+checking whether gcc accepts -g...  
+yes
+ 
+checking for gcc option to accept ISO C89...  
+none needed
+ 
+checking whether gcc understands -c and -o together...  
+yes
+ 
+checking for style of include used by make...  
+GNU
+ 
+checking dependency style of gcc...  
+gcc3
+ 
+checking for an ANSI C-conforming const...  
+yes
+ 
+checking build system type...  
+x86_64-unknown-linux-gnu
+ 
+checking host system type... x86_64-unknown-linux-gnu
+checking how to print strings...  
+printf
+checking for a sed that does not truncate output...  
+/bin/sed
+ 
+checking for grep that handles long lines and -e...  
+/bin/grep
+ 
+checking for egrep...  
+/bin/grep -E
+ 
+checking for fgrep...  
+/bin/grep -F
+ 
+checking for ld used by gcc...  
+/usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld...  
+yes
+ 
+checking for BSD- or MS-compatible name lister (nm)...  
+/usr/bin/nm -B
+ 
+checking the name lister (/usr/bin/nm -B) interface...  
+BSD nm
+checking whether ln -s works...  
+yes
+checking the maximum length of command line arguments...  
+3458764513820540925
+ 
+checking how to convert x86_64-unknown-linux-gnu file names to x86_64-unknown-linux-gnu format...  
+func_convert_file_noop
+checking how to convert x86_64-unknown-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+ 
+checking for objdump...  
+objdump
+ 
+checking how to recognize dependent libraries...  
+pass_all
+ 
+checking for dlltool...  
+no
+ 
+checking how to associate runtime and link libraries...  
+printf %s\n
+ 
+checking for ar...  
+ar
+ 
+checking for archiver @FILE support...  
+@
+ 
+checking for strip... strip
+ 
+checking for ranlib...  
+ranlib
+ 
+checking command to parse /usr/bin/nm -B output from gcc object...  
+ok
+ 
+checking for sysroot... no
+checking for a working dd...  
+/bin/dd
+checking how to truncate binary pipes...  
+/bin/dd bs=4096 count=1
+ 
+checking for mt...  
+mt
+checking if mt is a manifest tool...  
+no
+ 
+checking how to run the C preprocessor...  
+gcc -E
+ 
+checking for ANSI C header files...  
+yes
+ 
+checking for sys/types.h...  
+yes
+ 
+checking for sys/stat.h...  
+yes
+ 
+checking for stdlib.h...  
+yes
+ 
+checking for string.h...  
+yes
+ 
+checking for memory.h...  
+yes
+ 
+checking for strings.h...  
+yes
+ 
+checking for inttypes.h...  
+yes
+ 
+checking for stdint.h...  
+yes
+ 
+checking for unistd.h...  
+yes
+ 
+checking for dlfcn.h...  
+yes
+ 
+checking for objdir...  
+.libs
+ 
+checking if gcc supports -fno-rtti -fno-exceptions...  
+no
+ 
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works...  
+yes
+ 
+checking if gcc static flag -static works...  
+yes
+ 
+checking if gcc supports -c -o file.o...  
+yes
+checking if gcc supports -c -o file.o... (cached)  
+yes
+checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries...  
+yes
+checking dynamic linker characteristics...  
+GNU/Linux ld.so
+ 
+checking how to hardcode library paths into programs... immediate
+checking for shl_load...  
+no
+ 
+checking for shl_load in -ldld...  
+no
+ 
+checking for dlopen...  
+no
+checking for dlopen in -ldl...  
+yes
+ 
+checking whether a program can dlopen itself...  
+yes
+ 
+checking whether a statically linked program can dlopen itself...  
+no
+ 
+checking whether stripping libraries is possible...  
+yes
+checking if libtool supports shared libraries...  
+yes
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+ 
+checking for X...  
+libraries , headers /usr/X11R6/include/
+ 
+checking for gethostbyname...  
+yes
+ 
+checking for connect...  
+yes
+checking for remove...  
+yes
+ 
+checking for shmat...  
+yes
+ 
+checking for IceConnectionNumber in -lICE...  
+yes
+ 
+checking for XF86VidModeSwitchToMode in -lXxf86vm...  
+yes
+checking for ANSI C header files...  
+(cached) yes
+ 
+checking GL/gl.h usability...  
+yes
+checking GL/gl.h presence...  
+yes
+checking for GL/gl.h... yes
+ 
+checking GL/glu.h usability...  
+yes
+checking GL/glu.h presence...  
+yes
+checking for GL/glu.h...  
+yes
+ 
+checking GL/glx.h usability...  
+yes
+checking GL/glx.h presence...  
+yes
+checking for GL/glx.h...  
+yes
+ 
+checking fcntl.h usability...  
+yes
+checking fcntl.h presence...  
+yes
+checking for fcntl.h...  
+yes
+ 
+checking limits.h usability...  
+yes
+checking limits.h presence...  
+yes
+ 
+checking for limits.h... yes
+ 
+checking sys/ioctl.h usability...  
+yes
+checking sys/ioctl.h presence...  
+yes
+checking for sys/ioctl.h...  
+yes
+ 
+checking sys/param.h usability...  
+yes
+checking sys/param.h presence...  
+yes
+checking for sys/param.h...  
+yes
+ 
+checking sys/time.h usability...  
+yes
+checking sys/time.h presence...  
+yes
+checking for sys/time.h... yes
+ 
+checking whether time.h and sys/time.h may both be included...  
+yes
+ 
+checking for X11/extensions/xf86vmode.h...  
+yes
+ 
+checking whether gcc needs -traditional...  
+no
+ 
+checking for vprintf...  
+yes
+ 
+checking for _doprnt...  
+no
+checking for cos in -lm...  
+yes
+ 
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+ 
+ /bin/sh ./config.status
+ 
+config.status: creating Makefile
+ 
+config.status: creating doc/Makefile
+ 
+config.status: creating include/GL/Makefile
+ 
+config.status: creating include/Makefile
+ 
+config.status: creating progs/Makefile
+ 
+config.status: creating progs/demos/CallbackMaker/Makefile
+ 
+config.status: creating progs/demos/Fractals/Makefile
+ 
+config.status: creating progs/demos/Fractals_random/Makefile
+ 
+config.status: creating progs/demos/Lorenz/Makefile
+ 
+config.status: creating progs/demos/Makefile
+ 
+config.status: creating progs/demos/One/Makefile
+ 
+config.status: creating progs/demos/shapes/Makefile
+ 
+config.status: creating src/Makefile
+ 
+config.status: creating config.h
+ 
+config.status: config.h is unchanged
+ 
+config.status: executing depfiles commands
+ 
+config.status: executing libtool commands
+ 
+make[5]: Leaving directory '/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/freeglut'
