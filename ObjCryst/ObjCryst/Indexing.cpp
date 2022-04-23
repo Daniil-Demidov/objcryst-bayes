@@ -1423,7 +1423,7 @@ mLengthMin(4),mLengthMax(25),
 mAngleMin(M_PI),mAngleMax(2*M_PI/3),
 mVolumeMin(0),mVolumeMax(1600),
 mZeroShiftMin(0),mZeroShiftMax(0),
-mlattice(lattice),mCentering(LATTICE_P),mNbSpurious(nbSpurious),
+mlattice(lattice),mCentering(LATTICE_P),mNbSpurious(nbSpurious), mMaxLevelSize(0),
 mObs(0),mCalc(0),mWeight(0),mDeriv(0),mBestScore(0.0),
 mMinScoreReport(10),mMaxDicVolDepth(6),mDicVolDepthReport(6),
 mNbLSQExcept(0), mdatabase("ICSD")
@@ -1451,6 +1451,10 @@ void CellExplorer::SetVolumeMinMax(const float min,const float max)
 void CellExplorer::SetNbSpurious(const unsigned int nb)
 {
    mNbSpurious=nb;
+}
+void CellExplorer::SetMaxLevelSize(const unsigned int nb)
+{
+   mMaxLevelSize=nb;
 }
 void CellExplorer::SetMinMaxZeroShift(const float min,const float max)
 {
@@ -2931,7 +2935,7 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    // sum_PK_per_level[depth] += par0.P*K;
    // ++calls_per_level[depth];
 
-   assert(!(is_wanted && par0.P*K == 0));
+   // assert(!(is_wanted && par0.P*K == 0));
 
 
    // don't use here. move to dicvol
@@ -3895,7 +3899,7 @@ void CellExplorer::AnalyzeLevel()
    // make it global
    int control_depth = 6;
    // make it CellExplorer member
-   size_t max_level_size = 500000;
+   size_t max_level_size = mMaxLevelSize;
    // size_t max_level_size = 200000000;
    const int active_depth = mpPeakList->active_depth;
    size_t max_ancestor_size = max_level_size / get_children_count(mlattice);

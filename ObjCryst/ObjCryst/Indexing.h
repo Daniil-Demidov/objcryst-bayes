@@ -350,6 +350,7 @@ class CellExplorer:public RefinableObj
       void SetAngleMinMax(const float min,const float max);
       void SetVolumeMinMax(const float min,const float max);
       void SetNbSpurious(const unsigned int nb);
+      void SetMaxLevelSize(const unsigned int nb);
       /// Allowed error on 1/d (squared!), used for dicvol
       void SetD2Error(const float err);
       void SetMinMaxZeroShift(const float min,const float max);
@@ -412,6 +413,7 @@ class CellExplorer:public RefinableObj
       /// Centering type
       CrystalCentering mCentering;
       unsigned int mNbSpurious;
+      int mMaxLevelSize;
       float mD2Error;
       LSQNumObj mLSQObj;
       mutable CrystVector_REAL mObs;

@@ -2107,6 +2107,7 @@ class WXCellExplorer:public wxWindow
       wxTextCtrl *mpAngleMin,*mpAngleMax;
       wxTextCtrl *mpVolumeMin,*mpVolumeMax;
       wxTextCtrl *mpNbSpurious;
+      wxTextCtrl *mpMaxLevelSizeShort;
       wxTextCtrl *mpNbPeak;
       wxTextCtrl *mpErrorD;
       WXFieldChoice *mpFieldCrystal;
@@ -2237,6 +2238,14 @@ wxWindow(parent,-1),mpGraph(graph),mpPeakList(&peaklist),mpCellExplorer(0),mpCry
                                  wxTextValidator(wxFILTER_NUMERIC));
       pSpuriousSizer->Add(mpNbSpurious,0,wxALIGN_CENTER);
       pSizerAdvanced->Add(pSpuriousSizer,0,wxALIGN_CENTER);
+
+      wxBoxSizer *pLevelSizer=new wxBoxSizer(wxHORIZONTAL);
+      wxStaticText *pLevelText=new wxStaticText(pAdvanced,-1,_T("Nb calculations per level / 100000:"));
+      pLevelSizer->Add(pLevelText,0,wxALIGN_CENTER);
+      mpMaxLevelSizeShort=new wxTextCtrl(pAdvanced,-1,_T("5"),wxDefaultPosition,wxSize(40,-1),0,
+                                 wxTextValidator(wxFILTER_NUMERIC));
+      pLevelSizer->Add(mpMaxLevelSizeShort,0,wxALIGN_CENTER);
+      pSizerAdvanced->Add(pLevelSizer,0,wxALIGN_CENTER);
 
       wxBoxSizer *pNbPeakSizer=new wxBoxSizer(wxHORIZONTAL);
       wxStaticText *pNbPeakText=new wxStaticText(pAdvanced,-1,_T("Use Nb Peaks:"));
@@ -2588,7 +2597,7 @@ void WXCellExplorer::OnIndex(wxCommandEvent &event)
 
       wxString s;
       double lmin,lmax,amin=90,amax,vmin,vmax,error,stopOnScore,reportOnScore;
-      long nbspurious,nbPeak,stopOnDepth,reportOnDepth;
+      long nbspurious, max_level_size_short, nbPeak,stopOnDepth,reportOnDepth;
       s=mpLengthMin->GetValue();s.ToDouble(&lmin);
       s=mpLengthMax->GetValue();s.ToDouble(&lmax);
       //s=mpAngleMin->GetValue();s.ToDouble(&amin);
@@ -2596,6 +2605,7 @@ void WXCellExplorer::OnIndex(wxCommandEvent &event)
       s=mpVolumeMin->GetValue();s.ToDouble(&vmin);
       s=mpVolumeMax->GetValue();s.ToDouble(&vmax);
       s=mpNbSpurious->GetValue();s.ToLong(&nbspurious);
+      s=mpMaxLevelSizeShort->GetValue();s.ToLong(&max_level_size_short);
       s=mpNbPeak->GetValue();s.ToLong(&nbPeak);
       s=mpErrorD->GetValue();s.ToDouble(&error);
       s=mpStopOnScore->GetValue();s.ToDouble(&stopOnScore);
@@ -2612,6 +2622,7 @@ void WXCellExplorer::OnIndex(wxCommandEvent &event)
       mpCellExplorer->SetAngleMinMax((float)amin*DEG2RAD,(float)amax*DEG2RAD);
       mpCellExplorer->SetVolumeMinMax((float)vmin,(float)vmax);
       mpCellExplorer->SetNbSpurious((unsigned int)nbspurious);
+      mpCellExplorer->SetMaxLevelSize(100000*(unsigned int)max_level_size_short);
       mpCellExplorer->SetD2Error((float)(error*error));
 
       mpCellExplorer->SetCrystalCentering(LATTICE_P);
