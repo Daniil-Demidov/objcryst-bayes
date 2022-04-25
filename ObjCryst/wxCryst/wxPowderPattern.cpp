@@ -2239,14 +2239,6 @@ wxWindow(parent,-1),mpGraph(graph),mpPeakList(&peaklist),mpCellExplorer(0),mpCry
       pSpuriousSizer->Add(mpNbSpurious,0,wxALIGN_CENTER);
       pSizerAdvanced->Add(pSpuriousSizer,0,wxALIGN_CENTER);
 
-      wxBoxSizer *pLevelSizer=new wxBoxSizer(wxHORIZONTAL);
-      wxStaticText *pLevelText=new wxStaticText(pAdvanced,-1,_T("Nb calculations per level / 100000:"));
-      pLevelSizer->Add(pLevelText,0,wxALIGN_CENTER);
-      mpMaxLevelSizeShort=new wxTextCtrl(pAdvanced,-1,_T("5"),wxDefaultPosition,wxSize(40,-1),0,
-                                 wxTextValidator(wxFILTER_NUMERIC));
-      pLevelSizer->Add(mpMaxLevelSizeShort,0,wxALIGN_CENTER);
-      pSizerAdvanced->Add(pLevelSizer,0,wxALIGN_CENTER);
-
       wxBoxSizer *pNbPeakSizer=new wxBoxSizer(wxHORIZONTAL);
       wxStaticText *pNbPeakText=new wxStaticText(pAdvanced,-1,_T("Use Nb Peaks:"));
       pNbPeakSizer->Add(pNbPeakText,0,wxALIGN_CENTER);
@@ -2255,34 +2247,42 @@ wxWindow(parent,-1),mpGraph(graph),mpPeakList(&peaklist),mpCellExplorer(0),mpCry
       pNbPeakSizer->Add(mpNbPeak,0,wxALIGN_CENTER);
       pSizerAdvanced->Add(pNbPeakSizer,0,wxALIGN_CENTER);
 
-      wxBoxSizer *pStopSizer=new wxBoxSizer(wxHORIZONTAL);
-      wxStaticText* pStopOnScoreText=new wxStaticText(pAdvanced,-1,_T("Stop on Score>"));
-      pStopSizer->Add(pStopOnScoreText,0,wxALIGN_CENTER);
-      mpStopOnScore=new wxTextCtrl(pAdvanced,-1,_T("50"),wxDefaultPosition,wxSize(50,-1),0,
+      wxBoxSizer *pLevelSizer=new wxBoxSizer(wxHORIZONTAL);
+      wxStaticText *pLevelText=new wxStaticText(pAdvanced,-1,_T("Nb calculations per level / 100000:"));
+      pLevelSizer->Add(pLevelText,0,wxALIGN_CENTER);
+      mpMaxLevelSizeShort=new wxTextCtrl(pAdvanced,-1,_T("5"),wxDefaultPosition,wxSize(40,-1),0,
                                  wxTextValidator(wxFILTER_NUMERIC));
-      pStopSizer->Add(mpStopOnScore,0,wxALIGN_CENTER);
+      pLevelSizer->Add(mpMaxLevelSizeShort,0,wxALIGN_CENTER);
+      pSizerAdvanced->Add(pLevelSizer,0,wxALIGN_CENTER);
 
-      wxStaticText* pStopOnDepthText=new wxStaticText(pAdvanced,-1,_T("and depth>="));
-      pStopSizer->Add(pStopOnDepthText,0,wxALIGN_CENTER);
-      mpStopOnDepth=new wxTextCtrl(pAdvanced,-1,_T("6"),wxDefaultPosition,wxSize(30,-1),0,
-                                 wxTextValidator(wxFILTER_NUMERIC));
-      pStopSizer->Add(mpStopOnDepth,0,wxALIGN_CENTER);
-      pSizerAdvanced->Add(pStopSizer,0,wxALIGN_CENTER);
+      // wxBoxSizer *pStopSizer=new wxBoxSizer(wxHORIZONTAL);
+      // wxStaticText* pStopOnScoreText=new wxStaticText(pAdvanced,-1,_T("Stop on Score>"));
+      // pStopSizer->Add(pStopOnScoreText,0,wxALIGN_CENTER);
+      // mpStopOnScore=new wxTextCtrl(pAdvanced,-1,_T("50"),wxDefaultPosition,wxSize(50,-1),0,
+      //                            wxTextValidator(wxFILTER_NUMERIC));
+      // pStopSizer->Add(mpStopOnScore,0,wxALIGN_CENTER);
+
+      // wxStaticText* pStopOnDepthText=new wxStaticText(pAdvanced,-1,_T("and depth>="));
+      // pStopSizer->Add(pStopOnDepthText,0,wxALIGN_CENTER);
+      // mpStopOnDepth=new wxTextCtrl(pAdvanced,-1,_T("6"),wxDefaultPosition,wxSize(30,-1),0,
+      //                            wxTextValidator(wxFILTER_NUMERIC));
+      // pStopSizer->Add(mpStopOnDepth,0,wxALIGN_CENTER);
+      // pSizerAdvanced->Add(pStopSizer,0,wxALIGN_CENTER);
 
 
-      wxBoxSizer *pReportSizer=new wxBoxSizer(wxHORIZONTAL);
-      wxStaticText* pReportOnScoreText=new wxStaticText(pAdvanced,-1,_T("Report score>"));
-      pReportSizer->Add(pReportOnScoreText,0,wxALIGN_CENTER);
-      mpReportOnScore=new wxTextCtrl(pAdvanced,-1,_T("10"),wxDefaultPosition,wxSize(50,-1),0,
-                                 wxTextValidator(wxFILTER_NUMERIC));
-      pReportSizer->Add(mpReportOnScore,0,wxALIGN_CENTER);
+      // wxBoxSizer *pReportSizer=new wxBoxSizer(wxHORIZONTAL);
+      // wxStaticText* pReportOnScoreText=new wxStaticText(pAdvanced,-1,_T("Report score>"));
+      // pReportSizer->Add(pReportOnScoreText,0,wxALIGN_CENTER);
+      // mpReportOnScore=new wxTextCtrl(pAdvanced,-1,_T("10"),wxDefaultPosition,wxSize(50,-1),0,
+      //                            wxTextValidator(wxFILTER_NUMERIC));
+      // pReportSizer->Add(mpReportOnScore,0,wxALIGN_CENTER);
 
-      wxStaticText* pReportOnDepthText=new wxStaticText(pAdvanced,-1,_T("or depth>="));
-      pReportSizer->Add(pReportOnDepthText,0,wxALIGN_CENTER);
-      mpReportOnDepth=new wxTextCtrl(pAdvanced,-1,_T("4"),wxDefaultPosition,wxSize(50,-1),0,
-                                 wxTextValidator(wxFILTER_NUMERIC));
-      pReportSizer->Add(mpReportOnDepth,0,wxALIGN_CENTER);
-      pSizerAdvanced->Add(pReportSizer,0,wxALIGN_CENTER);
+      // wxStaticText* pReportOnDepthText=new wxStaticText(pAdvanced,-1,_T("or depth>="));
+      // pReportSizer->Add(pReportOnDepthText,0,wxALIGN_CENTER);
+      // mpReportOnDepth=new wxTextCtrl(pAdvanced,-1,_T("4"),wxDefaultPosition,wxSize(50,-1),0,
+      //                            wxTextValidator(wxFILTER_NUMERIC));
+      // pReportSizer->Add(mpReportOnDepth,0,wxALIGN_CENTER);
+      // pSizerAdvanced->Add(pReportSizer,0,wxALIGN_CENTER);
 
       wxBoxSizer *pErrorSizer=new wxBoxSizer(wxHORIZONTAL);
       wxStaticText* pErrorText=new wxStaticText(pAdvanced,-1,_T("delta(d)/d^2 error:"));
@@ -2608,10 +2608,15 @@ void WXCellExplorer::OnIndex(wxCommandEvent &event)
       s=mpMaxLevelSizeShort->GetValue();s.ToLong(&max_level_size_short);
       s=mpNbPeak->GetValue();s.ToLong(&nbPeak);
       s=mpErrorD->GetValue();s.ToDouble(&error);
-      s=mpStopOnScore->GetValue();s.ToDouble(&stopOnScore);
-      s=mpStopOnDepth->GetValue();s.ToLong(&stopOnDepth);
-      s=mpReportOnScore->GetValue();s.ToDouble(&reportOnScore);
-      s=mpReportOnDepth->GetValue();s.ToLong(&reportOnDepth);
+      // s=mpStopOnScore->GetValue();s.ToDouble(&stopOnScore);
+      // s=mpStopOnDepth->GetValue();s.ToLong(&stopOnDepth);
+      // s=mpReportOnScore->GetValue();s.ToDouble(&reportOnScore);
+      // s=mpReportOnDepth->GetValue();s.ToLong(&reportOnDepth);
+
+      stopOnScore = 50;
+      stopOnDepth = 6;
+      reportOnScore = 10;
+      reportOnDepth = 4;
 
       // Use at most 30 reflections for indexing
       if(mpPeakList->GetPeakList().size()>nbPeak) mpPeakList->GetPeakList().resize(nbPeak);
