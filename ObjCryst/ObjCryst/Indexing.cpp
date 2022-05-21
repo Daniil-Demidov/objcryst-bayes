@@ -803,19 +803,6 @@ PeakList::hkl0::hkl0(const int h0,const int k0, const int l0):
 h(h0),k(k0),l(l0)
 {}
 
-// bool compare_hkl0(const PeakList::hkl0 & hkl1, const PeakList::hkl0 & hkl2)
-// {
-//    if (hkl1.h == hkl2.h)
-//    {
-//       if (hkl1.k == hkl2.k)
-//       {
-//          return hkl1.l < hkl2.l;
-//       }
-//       return hkl1.k < hkl2.k;
-//    }
-//    return hkl1.h < hkl2.h;
-// }
-
 bool operator<(const PeakList::hkl0 & hkl1, const PeakList::hkl0 & hkl2)
 {
    if (hkl1.h == hkl2.h)
@@ -1171,14 +1158,6 @@ void PeakList::clear_locals() const
 
    for (vector<PeakList::hkl>::const_iterator pos = mvHKL.begin(); pos != mvHKL.end(); ++pos)
    {
-// hkl(const float dobs=1.0,const float iobs=0.0,const float dobssigma=0.0,const float iobssigma=0.0,
-//       const int h=0,const int k=0, const int l=0,const float d2calc=0);
-// PeakList::hkl::hkl(const float d,const float i,const float ds,const float is,
-//                    const int h0,const int k0, const int l0,const float dc0):
-// dobs(d),dobssigma(ds),d2obs(d*d),d2obsmin((d-ds/2)*(d-ds/2)),d2obsmax((d+ds/2)*(d+ds/2)),iobs(i),iobssigma(is),
-// h(h0),k(k0),l(l0),isIndexed(false),isSpurious(false),stats(0),
-// d2calc(dc0),d2diff(0)
-
       pos->h = pos->k = pos->l = 0;
       pos->isIndexed = pos->isSpurious = false;
       pos->stats = 0;
@@ -1674,25 +1653,6 @@ ParentInfo make_parent_info(const PeakList &dhkl,  ParentInfo const * pparent_in
          }
       }
    }
-   // else
-   // {
-   //    assert(0);
-   //    vector<PeakList::hkl>::const_iterator pos, dhkl_mvHKL_end;
-   //    vector<ParentInfo::DhklInfo>::iterator pdhkl_info_new;
-   //    dhkl_mvHKL_end = dhkl.GetPeakList().end();
-   //    vector<PeakList::thkl>::iterator dhkl_vthkl_end = dhkl.vthkl.end();
-   //    for(pos=dhkl.GetPeakList().begin(), pdhkl_info_new=parent_info_new.vdhkl_info.begin(); pos!=dhkl_mvHKL_end; ++pos, ++pdhkl_info_new)
-   //    {
-   //       // for (vector<PeakList::thkl *>::const_iterator ppthkl_old=pdhkl_info_old->vpthkl.begin(); ppthkl_old!=pdhkl_info_old->vpthkl.end(); ++ppthkl_old)
-   //       for(vector<PeakList::thkl>::iterator pthkl=dhkl.vthkl.begin(); pthkl !=dhkl_vthkl_end; ++pthkl)
-   //       {
-   //          if((pos->d2obsmax >= pthkl->d2min) && (pthkl->d2max >= pos->d2obsmin))
-   //          {
-   //             pdhkl_info_new->vpthkl.push_back(&*pthkl);
-   //          }
-   //       }
-   //    }
-   // }
    
    vector<PeakList::Ax>::const_iterator pax;
    vector<ParentInfo::AxInfo>::iterator pax_info;
@@ -1965,41 +1925,9 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
                // float P_prior = -boost::math::expm1(pthkl->dRho);
                pthkl->K = P_post/P_prior;
                pthkl->P = P_prior;
-               // // debug
-               // int peak_number = pthkl - dhkl.vthkl.begin();
-               // if (peak_number == 38)
-               // {
-               //    cout << "2146: some cell 38 peak. dRho: " << pthkl->dRho << ", K:" << pthkl->K << ", P: " << pthkl->P << endl;
-               // }
-               // if (is_wanted)
-               // {
-               //    // int peak_number = pthkl - dhkl.vthkl.begin();
-               //    // first peak for axis #31
-               //    if (peak_number == 38)
-               //    {
-               //       cout << "2150: 38 peak. K:" << pthkl->K << ", P: " << pthkl->P << endl;
-               //    }
-               // }
             }
          }
       }
-      // if (is_wanted)
-      // {
-      //    cout << "2168: peak count:\n";
-      //    cout << count_peaks << " " << count_good << endl;
-      // }
-
-      // if (is_wanted)
-      // {
-      //    cout << "Experimental intervals\n";
-      //    for(pos=dhkl.GetPeakList().begin(); pos!=dhkl.GetPeakList().end(); ++pos)
-      //    {
-      //       int index1 = floorf(dhkl.coef*pos->d2obsmin);
-      //       int index2 = ceilf(dhkl.coef*pos->d2obsmax);
-      //       cout << "d2min: " << pos->d2obsmin << ", d2max: " << pos->d2obsmax << ", Fmin: " << dhkl.integrals[index1].F << ", Fmax: " << dhkl.integrals[index2].F << endl; 
-      //    }
-      //    cout << "End Experimental intervals\n";
-      // }
 
 
       for(pos=dhkl.GetPeakList().begin(), pdhkl_info=pparent_info->vdhkl_info.begin(); pos!=dhkl.GetPeakList().end(); ++pos, ++pdhkl_info)
@@ -2027,207 +1955,6 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
       }
 
    }
-   // else
-   // {
-   //    assert(0);
-   //    *pparent_info = ParentInfo(nb);
-   //    for(pos=dhkl.GetPeakList().begin();pos!=dhkl.GetPeakList().end();++pos)
-   //    {
-   //       pos->isIndexed=false;
-   //    }
-   //    dhkl.vthkl.clear();
-   //    dhkl.vax.clear();
-
-   //    int h,k,l;
-   //    float dmax=dhkl.GetPeakList()[nb-1].d2obs;
-   //    float dmin=dhkl.GetPeakList()[0   ].d2obs;
-
-
-   //    int sk0,sl0;// do we need >0 *and* <0 indices for k,l ?
-   //    switch(par.mlattice)
-   //    {
-   //       case TRICLINIC:
-   //          sk0=-1;sl0=-1;
-   //    break;
-   //       case MONOCLINIC:
-   //       {
-   //          sk0=1;sl0=-1;
-   //          break;
-   //       }
-   //       case ORTHOROMBIC:
-   //          sk0=1;sl0=1;
-   //          break;
-   //       case HEXAGONAL:
-   //          sk0=-1;sl0=1;
-   //          break;
-   //       case RHOMBOHEDRAL:
-   //          sk0=-1;sl0=-1;
-   //          break;
-   //       case TETRAGONAL:
-   //          sk0=1;sl0=1;
-   //          break;
-   //       case CUBIC:
-   //          sk0=1;sl0=1;
-   //          break;
-   //       // This should never happen.  Avoid using unitialized values.
-   //       default:
-   //          throw 0;
-   //    }
-   //    int stepk,stepl;// steps in k,l to use for centered lattices
-   //    switch(par.mCentering)
-   //    {
-   //       case LATTICE_P:stepk=1;stepl=1;break;
-   //       case LATTICE_I:stepk=1;stepl=2;break;
-   //       case LATTICE_A:stepk=1;stepl=2;break;
-   //       case LATTICE_B:stepk=1;stepl=2;break;
-   //       case LATTICE_C:stepk=2;stepl=1;break;
-   //       case LATTICE_F:stepk=2;stepl=2;break;
-   //       // This should never happen.  Avoid using unitialized values.
-   //       default: throw 0;
-   //    }
-   //    //RecUnitCell par0(par),par1(par);
-   //    //for(unsigned int i=0;i<7;++i) {par0.par[i]-=dpar.par[i];par1.par[i]+=dpar.par[i];}
-
-   //    //currently first & last unindexed dhkl
-   //    first=dhkl.GetPeakList().begin(),last=dhkl.GetPeakList().end(),end=dhkl.GetPeakList().end();
-
-   //    unsigned long nbCalcH,nbCalcK;// Number of calculated lines below dmax for each h,k
-    
-   //    //index search cycles
-   //    for(h=0;;++h)
-   //    {
-   //       if(verbose) cout<<"H="<<h<<endl;
-   //       nbCalcH=0;
-   //       for(int sk=sk0;sk<=1;sk+=2)
-   //       {
-   //          if(h==0) sk=1;
-   //          if(stepk==2) k=(h%2);// For LATTICE_C,LATTICE_F: h odd => k odd
-   //          else k=0;
-   //          for(;;k+=stepk)
-   //          {
-   //             if(verbose) cout<<"K="<<k*sk<<endl;
-   //             nbCalcK=0;
-   //             for(int sl=sl0;sl<=1;sl+=2)
-   //             {
-   //                int l0=0;
-   //                if((h+k)==0)
-   //                {
-   //                   sl=1;// No need to list 0 0 l with l<0
-   //                   l0=1;
-   //                }
-   //                else
-   //                {
-   //                   if(h==0)
-   //                   {
-   //                      if(par.mlattice==MONOCLINIC) sl=1;// 0 k l and 0 k -l are equivalent
-   //                      if((sk<0)||(sl<0)) l0=1;// Do not list 0 k 0 with k<0
-   //                      else l0=0;// h==k==0 already covered
-   //                   }
-   //                   else
-   //                   {
-   //                      if(sl<0) l0=1;// Do not list h k 0 twice
-   //                      else l0=0;
-   //                   }
-   //                }
-   //                if(stepl==2)
-   //                {
-   //                   if(par.mCentering==LATTICE_I) l0+=(h+k+l0)%2;
-   //                   if(par.mCentering==LATTICE_A) l0+=(k+l0)%2;// Start at k+l even
-   //                   if(  (par.mCentering==LATTICE_B)
-   //                      ||(par.mCentering==LATTICE_F)) l0+=(h+l0)%2;// Start at h+l even
-   //                }
-   //                if(verbose) cout<<"SL="<<sl<<", L0="<<l0<<", STEPL="<<stepl<<", Centering="<<par.mCentering<<endl;
-   //                for(l=l0;;l+=stepl)
-   //                {
-   //                   if(verbose) cout<<"L="<<l<<","<<sl<<endl;
-   //                   float d0,d1;
-   //                   par.hkl2d_delta(h,sk*k,sl*l,dpar,d0,d1);
-   //                   if(d0<dmax) {nbCalcH++;nbCalcK++;}
-   //                   if((d1<dmin)&&(maxNbMissingBelow5==0)) continue;
-   //                   if(d0>dmax)
-   //                   {
-   //                      if(par.mlattice==TRICLINIC)
-   //                      {
-   //                         // Must check that d is increasing with l, otherwise we still need to increase it
-   //                         if(verbose) cout<<"L?="<< par.hkl2d(h,sk*k,sl*l,NULL,3)*sl <<", dmax="<<dmax<<endl;
-   //                         if((par.hkl2d(h,sk*k,sl*l,NULL,3)*sl)>0) break;
-   //                      }
-   //                      else break;
-   //                   }
-   //                   //common block
-   //                   double K = 1;
-   //                   double dRho = -1;
-   //                   if ((0 < d0) && (d1 < dhkl.d2max))
-   //                   {
-   //                      int index1 = floorf(dhkl.coef*d0);
-   //                      int index2 = floorf(dhkl.coef*d1) + 1;
-   //                      PeakList::integral const & I1 = dhkl.integrals[index1];
-   //                      PeakList::integral const & I2 = dhkl.integrals[index2];
-   //                      //not sure if the check is needed
-   //                      double dRho = I2.Rho - I1.Rho;
-   //                      if (dRho > 0.5)
-   //                         double K = (I2.F - I1.F) / dRho;
-   //                   }
-   //                   dhkl.vthkl.push_back(PeakList::thkl(h, sk*k, sl*l, 0, d0, d1, K, dRho));
-   //                   // bool missing=(d0<d5)&&(maxNbMissingBelow5>0);
-   //                   // for(pos=first;pos!=end;++pos)
-   //                   // {
-   //                   //    if(pos==last) break;
-   //                   //    const float d2obs=pos->d2obs,d2obsmin=pos->d2obsmin, d2obsmax=pos->d2obsmax;
-   //                   //    if((d2obsmax>=d0) && (d1>=d2obsmin))
-   //                   //    {
-   //                   //       missing=false;
-   //                   //       if(!(pos->isIndexed))
-   //                   //       {
-   //                   //          --nbIndexed;
-   //                   //          pos->isIndexed=true;
-   //                   //       }
-   //                   //       if(verbose) cout<<d1<<" < ? <"<<d0<<"("<<h<<","<<sk*k<<","<<sl*l<<"): "<<d2obs<<" (remaining to index:"<<nbIndexed<<")"<<endl;
-   //                   //       pos->vDicVolHKL.push_back(PeakList::hkl0(h,sk*k,sl*l));
-   //                   //    }
-   //                   // }
-   //                   // if(missing) if(++nbMissingBelow5>=maxNbMissingBelow5)return false;
-   //                }
-   //             }
-   //             if(nbCalcK==0) break;// && ((par.hkl2d(h,sk*k,0,NULL,2)*sk)>0)) break; // k too large
-   //          }
-   //       }
-   //       if(nbCalcH==0) break;//h too large
-   //    }
-      
-   //    //make axes
-   //    sort(dhkl.vthkl.begin(), dhkl.vthkl.end());
-   //    // map hkl0 to corresponding pointer pthkl in vthkl
-   //    map<PeakList::hkl0, vector<PeakList::thkl *> > map_axes;
-   //    for (vector<PeakList::thkl>::iterator pthkl = dhkl.vthkl.begin(); pthkl != dhkl.vthkl.end(); ++pthkl)
-   //    {
-   //       int p = __gcd(__gcd(pthkl->h, pthkl->k), pthkl->l);
-   //       PeakList::hkl0 base_hkl(pthkl->h/p, pthkl->k/p, pthkl->l/p);
-   //       map_axes[base_hkl].push_back(&*pthkl);
-   //    }
-
-   //    for (map<PeakList::hkl0, vector<PeakList::thkl *> >::const_iterator pax = map_axes.begin(); pax != map_axes.end(); ++pax)
-   //    {
-   //       PeakList::Ax ax(pax->second);
-   //       dhkl.vax.push_back(ax);
-   //    }
-   //    //compare with experiment
-   //    for(pos=dhkl.GetPeakList().begin(), pdhkl_info=pparent_info->vdhkl_info.begin(); pos!=dhkl.GetPeakList().end(); ++pos, ++pdhkl_info)
-   //    {
-   //       for (vector<PeakList::thkl>::iterator pthkl = dhkl.vthkl.begin(); pthkl != dhkl.vthkl.end(); ++pthkl)
-   //       {
-   //          if ((pthkl->d2min <= pos->d2obsmax) && (pthkl->d2max >= pos->d2obsmin))
-   //          {
-   //             if (!(pos->isIndexed))
-   //                --nbIndexed;
-   //             pos->isIndexed=true;
-   //             pdhkl_info->vpthkl.push_back(&*pthkl);
-   //             ++(pthkl->count);
-   //          }
-   //       }
-   //    }
-   // }
-   //universal part
 
    //K -> 1 correction for pseudosymmetry
    if (pseudo_correct)
@@ -2272,14 +1999,8 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
       if (!(pthkl->is_disabled)) K *= pthkl->K;
    }
 
-   // for (vector<vector<PeakList::thkl *> >::const_iterator pax = dhkl.vax.begin(); pax != dhkl.vax.end(); ++pax)
-   // for (vector<PeakList::Ax>::const_iterator pax = dhkl.vax.begin(); pax != dhkl.vax.end(); ++pax)
    vector<PeakList::Ax>::iterator pax;
    vector<ParentInfo::AxInfo>::const_iterator pax_info;
-   // if (is_wanted)
-   // {
-   //    cout << "line:2293\n";
-   // }
    for (pax = dhkl.vax.begin(), pax_info=pparent_info->vax_info.begin(); pax != dhkl.vax.end(); ++pax, ++pax_info)
    {
       double dRho = pax->vthkl.front()->dRho;
@@ -2290,24 +2011,11 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
          double Pz1 = pax->vthkl.front()->P;
          pax->P = Pz1;
          double Kz1 = pax->vthkl.front()->K;
-         // double Ny, Ky1;
-
-         // if (pax->vthkl.front()->is_disabled)
-         // {
-         //    Ny = pax_info->N_without1;
-         //    Ky1 = 1;
-         // }
-         // else
-         // {
-         //    Ny = pax_info->N_with1;
-         //    Ky1 = pax_info->vK.front();
-         // }
          double Ky1 = pax_info->vK.front();
          double N_without1_y = pax_info->N_without1;
          double N_with1_y = pax_info->N_with1;
          double K_secondary = 1;
          double K_secondary_y = 1;
-         // for (vector<PeakList::thkl *>::const_iterator ppthkl = pax->begin(); ppthkl != pax->end(); ++ppthkl)
          vector<PeakList::thkl *>::const_iterator ppthkl = ++pax->vthkl.begin();
          for (vector<double>::const_iterator pKy = ++pax_info->vK.begin(); ppthkl != pax->vthkl.end(); ++ppthkl, ++pKy)
          {
@@ -2323,8 +2031,6 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
                K_secondary_y *= *pKy;
             }
          }
-         // N_with1_y = max(N_with1_y, 1 - pax_info->P);
-         // N_without1_y = max(N_without1_y, 1 - pax_info->P);
          pax->N_without1 = (pax_info->P - Pz1)*K_secondary_y + N_without1_y;
          pax->N_with1 = (pax_info->P*Ky1 - Pz1*Kz1)*K_secondary_y + N_with1_y;
          double Nz = pax->vthkl.front()->is_disabled ? pax->N_without1 : pax->N_with1;
@@ -2334,29 +2040,11 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
          double Ka = Kz1_selected*K_secondary*Ka_corr;
          // original
          K *= Ka_corr;
-         // // debug
-         // if (pax->vthkl.size() > 1) K *= Ka_corr;
-
-         // K *= Ka/max(Pa*Ka, PKmax, 1) - choose best alternative(s)
          // we assume Pa < 1 because dRho < 0.5
          if (is_wanted)
          {
             int ax_number = pax - dhkl.vax.begin();
-            // if (ax_number == 23)
-            // {
-            //    cout << __LINE__ << ": ax #23, " << "disabled: " << pax->vthkl.front()->is_disabled << endl;
-            //    // cout << "number of first peak for axis #31: " << pax->vthkl.front() - &dhkl.vthkl.front() << endl;
-            // }
-
             int num_peaks = pax->vthkl.size();
-            // if (true)
-            // important print
-            // if (num_peaks > 1)
-            // {
-            //    // change to  cout << "2477: ax_number: " << ax_number <<
-            //    cout << __LINE__ << ": ax_number: " << "_" << ", num_peaks: " << pax->vthkl.size() << ", Ka_corr: " <<  Ka_corr << " ,Pa: " << Pz1 << ", K1:" << Kz1 << ", K_secondary: " << K_secondary << ", P*K1: " << Pz1*Kz1 << ", Ka: " << Ka << ", Nz: " << Nz << ", denom: " << Nz + Pz1*Kz1*K_secondary;
-            //    cout << ", Ky1: " << Ky1 << ", Py: " << pax_info->P << ", Py*Ky: " << pax_info->P*Ky1 << endl;
-            // }
 
             if (pax_info->P*Ky1 - Pz1*Kz1 <= -1.0e-15)
             {
@@ -2368,16 +2056,10 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
          }
       }
    }
-   // if (useStoredHKL != 1)
-   // {
-   //    pparent_info->vax_info
-   // }
    if(verbose)
    {
       dhkl.Print(cout);
    }
-   // if (is_wanted)
-   //    cout << "K: " << K << endl;
    if (pK != 0)
       *pK = K;
    return nbIndexed<=0;
@@ -2395,7 +2077,7 @@ double get_cs_probability(CrystalSystem cs)
    case MONOCLINIC:    return 0.1679;
    case ORTHOROMBIC:   return 0.2062;
    case HEXAGONAL:     return 0.1102;
-   // In my notes its for trigonal. But may be i meant rhombohedral. It's a problem for hexagonal also
+   // In my notes its for trigonal. But I probably meant rhombohedral. It's a problem for hexagonal also
    case RHOMBOHEDRAL:  return 0.0949;
    case TETRAGONAL:    return 0.1548;
    case CUBIC:         return 0.2261;
@@ -2516,45 +2198,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
       par0.P = 3*jacobian*search_volume*max(mPrior["a"][ap], mPrior["a"][a0])*max(mPrior["a"][bp], mPrior["a"][b0])*max(mPrior["a"][cp], mPrior["a"][c0])* \
                                     mPrior["cos_alpha"][cos_alpha]*mPrior["cos_alpha"][cos_beta]*mPrior["cos_alpha"][cos_gamma];
       par0.P *= get_cs_probability(mlattice);
-      // clean all this debug
-      // if (!((a0 <= ap) && (b0 <= bp) && (c0 <= cp)))
-      // {
-      //    cout << __LINE__ << ": " << a0 << ": " << ap << ", " << b0 << ": " << bp << ", " << c0 << ": " << cp << endl;
-      // }
-
-      // if (depth == 2)
-      // {
-      //    vector<float> ratios;
-      //    ratios.push_back(ap/a0);
-      //    ratios.push_back(bp/b0);
-      //    ratios.push_back(cp/c0);
-      //    global_min_ratio = min(global_min_ratio, *min_element(ratios.begin(), ratios.end()));
-      //    global_max_ratio = max(global_max_ratio, *max_element(ratios.begin(), ratios.end()));
-      // }
-
-      // assert(par0.P == 0);
-      // assert(mPrior["a"][ap] == 0);
-
-      // assert(jacobian != 0);
-      // assert(search_volume != 0);
-      // if (mPrior["a"][ap] == 0)
-      // {
-      //    cout << __LINE__ << ": " << ap << endl;
-      //    std::vector<float> par0d = par0.DirectUnitCell();
-      //    cout << __LINE__ << ": ";
-      //    for(unsigned int i=0;i<3;++i) {cout << par0d[i] << " ";}
-      //    for(unsigned int i=3;i<6;++i) {cout << par0d[i]*RAD2DEG << " ";}
-      //    cout << endl;
-      //    cout << "vmin0: " << vmin0 << ", vmax0: " << vmax0 << endl;
-
-      //    // cout << mPrior["a"][1] << " " << mPrior["a"][5] << " " << mPrior["a"][10] << " " << mPrior["a"][15] << " " << mPrior["a"][26.0] << " " << mPrior["a"][25.3302]<< endl;
-      // }
-      // assert(mPrior["a"][ap] != 0);
-      // assert(mPrior["a"][bp] != 0);
-      // assert(mPrior["a"][cp] != 0);
-      // assert(mPrior["cos_alpha"][cos_alpha] != 0);
-      // assert(mPrior["cos_alpha"][cos_beta] != 0);
-      // assert(mPrior["cos_alpha"][cos_gamma] != 0);
 
 
 
@@ -2579,40 +2222,10 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
             float c = parmd[2];
             float cos_beta = abs(par0.par[4]) - abs(dpar.par[4]);
             cos_beta = max(cos_beta, (float)0.0);
-            // if (mpPeakList->active_depth == 3)
-            // {
-            //    cout << __LINE__ << ": ";
-            //    for (std::map<std::string, FunctionTable>::const_iterator pprior = mPrior.begin(); pprior != mPrior.end(); ++pprior)
-            //    {
-            //       cout << pprior->first << " ";
-            //    }
-            //    cout << endl;
-            //    mPrior["cos_beta"];
-            // // }
-            // if (nbCalc >= 8264)
-            // {
-            //    mPrior["a"];
-            //    cout << mPrior["a"][10.0] << endl;
-            //    // assert(0);
-            // }
-            // mPrior["cos_beta"];
-            // assert(!(nbCalc == 30937 && mpPeakList->active_depth == 2));
+
 
             // multiplier = 2 permutations of (a, c)
             par0.P = 2*jacobian*search_volume*mPrior["a"][a]*mPrior["b"][b]*mPrior["a"][c]*mPrior["cos_beta"][cos_beta];
-            // if (par0.P > 1600)
-            // {
-            //    cout << "anomalous par0.P: " << par0.P << endl;
-            //    cout << "density: " << mPrior["a"][a]*mPrior["b"][b]*mPrior["a"][c]*mPrior["cos_beta"][cos_beta] << endl;
-            //    cout << mPrior["a"][a] << " " << mPrior["b"][b] << " " <<mPrior["a"][c] << " " <<mPrior["cos_beta"][cos_beta] << " " <<endl;
-            //    cout << dpar.par[1]/par0.par[1] << " " << dpar.par[2]/par0.par[2] << " " << dpar.par[3]/par0.par[4] << " " << dpar.par[4] << " " << endl;
-            // }
-            // if (is_wanted && (depth == 15))
-            // {
-            //    cout << "density: " << mPrior["a"][a]*mPrior["b"][b]*mPrior["a"][c]*mPrior["cos_beta"][cos_beta] << endl;
-            //    cout << mPrior["a"][a] << " " << mPrior["b"][b] << " " <<mPrior["a"][c] << " " <<mPrior["cos_beta"][cos_beta] << " " <<endl;
-            //    cout << dpar.par[1]/par0.par[1] << " " << dpar.par[2]/par0.par[2] << " " << dpar.par[3]/par0.par[4] << " " << dpar.par[4] << " " << endl;
-            // }
             break;
          }
          case ORTHOROMBIC:
@@ -2704,12 +2317,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
          global_pmax = max(global_pmax, par0.P);
       }
    }
-   // if (is_wanted && (depth == 15))
-   // {
-   //    cout << "global_p: " << global_p << endl;
-   //    cout << "global_pmax: " << global_pmax << endl;
-   //    cout << "global_pkmax: " << global_pkmax << endl;
-   // }
 
 
    unsigned int useStoredHKL=1;//Use already stored hkl
@@ -2735,12 +2342,7 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    if (depth == mpPeakList->active_depth && !mpPeakList->mis_exta_run)
    {
       
-      // add indexed to use impurities. Carefully!
-      // short criterion = 500*log(par0.P*K);
-      // *mpPeakList->mvvcriterion[depth].rbegin() = criterion;
       *mpPeakList->mvvPK[depth].rbegin() = par0.P*K;
-      // mpPeakList->mvvcriterion[depth].push_back(criterion);
-      // mpPeakList->mvvPK[depth].push_back(par0.P*K);
       assert(mpPeakList->mvvPK[depth].size() == mpPeakList->mvcount[depth] + 1);
       indexed = false; // not going futher yet
    }
@@ -2749,26 +2351,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
          indexed = true;
          ++repeated_calls_per_level[depth];
       }
-
-   
-   
-
-   // if (K > 8.82e21)
-   // if (par0.P*K > 2.8e08)
-   // {
-   //    cout << "ghost cell\n";
-   //    cout << "depth: " << depth << endl;
-   //    cout << "P: " << par0.P << " K: " << K << " PK: " << par0.P*K << endl;
-   //    vector<float> pard=par0.DirectUnitCell();
-   //    cout<< "a="<<pard[0]<<", b="<<pard[1]<<", c="<<pard[2]
-   //          <<", alpha="<<pard[3]*RAD2DEG<<", beta="<<pard[4]*RAD2DEG<<", gamma="<<pard[5]*RAD2DEG
-   //          <<", V="<<pard[6]<<endl;
-   //    cout << "reciprocal unit cell parameters with errors" << endl;
-   //    for (int i = 0; i < 7; ++i)
-   //       cout << i << " : " << par0.par[i] << " +- " << dpar.par[i]  << endl;
-   //    cout << "endghost\n";
-   // }
-
 
    if (is_wanted)
    {
@@ -2779,19 +2361,7 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
       cout << "PK: " << par0.P*K << endl;
    }
 
-   //debug. remove all unnecessary calculations with depth > 0
-   // if (!(is_wanted))
-   //    indexed = false;
 
-   //debug. always follow wanted cell
-   // if (is_wanted)
-   //    indexed = true;
-
-   // if (is_wanted && !(indexed))
-   //    bool indexed=DichoIndexed(*mpPeakList,par0,dpar,mNbSpurious,localverbose,useStoredHKL,maxMissingBelow5);
-
-   // if (is_wanted && (depth == 6) && (minV > 300))
-   //    bool indexed=DichoIndexed(*mpPeakList,par0,dpar,mNbSpurious,localverbose,useStoredHKL,maxMissingBelow5);
 
    #if 0
    // If indexation failed but depth>=4, try adding a zero ?
@@ -2872,74 +2442,12 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    }
    */
    
-   // //debug - test only zero level.
-   // indexed = false;
 
-   // indexed = (par0.P*K > 1.8e-7);
-   // indexed = (par0.P*K > 1.0e-8);
-   // indexed = (par0.P*K > 2.5e-8);
-   // indexed = (par0.P*K > 5.3e-7);
 
-   // old values
-   // double correct_PK[] =  {0.00150689, 0.000107884, 2.95446e-06, 5.33105e-07, 3.83331e-06, 0.00286341, 1.35657, 53.1729, 1825.98,
-   //                         13420.8, 2425.39, 1226.78, 275.967, 22.7086, 3.47536, 0.328702};
-   // double correct_PK[] = {0.00150689, 0.000107884, 2.95446e-06, 5.33105e-07, 3.83331e-06, 0.00286341, 1.31225, 74.122, 2478.23,
-   //                        11593.4, 14013.7, 8531.64, 2291.06, 432.289, 66.2044, 5.79066};
-   // new
-   // // without pseudo
-   // double correct_PK[] = {0.00150689, 0.000107884, 1.7332e-06, 7.59758e-06, 0.000148606, 0.130713, 4.91292, 31.378, 405.211, 358.963, 355.594, 64.8027, 9.27792, 1.29198, 0.0979703, 0.00867641}; 
-   // with pseudo
-   double correct_PK[] = {0.00150689, 0.00010788, 1.7332e-06, 4.61665e-06, 5.5539e-05, 0.130713, 1.40538, 30.9016, 363.097, 405.861, 398.819, 72.9267, 10.4238, 1.45008, 0.10996, 0.00973337};
-
-   // double PK0 = 100;
-
-   // double PK0 = 1.5e-6; // main value
-   // double PK0 = 5.3e-7;
-   // double PK0 = 6.7888e-7;
-   // double PK0 = 5.8e-6;
-   
-   // double PK0 = 1.477e-06; 
-   // indexed = (par0.P*K > PK0);
-
-   // if (7 < depth && depth <= 13) indexed = (par0.P*K > max(PK0, 0.001*correct_PK[depth]));
-   // if (depth > 13) indexed = (par0.P*K > max(PK0, 0.1*correct_PK[depth]));
 
 
    global_pkmax = max(par0.P*K, global_pkmax);
 
-
-   // if (depth < 6 && !is_wanted) indexed = false;
-   // global_kmax = max(global_kmax, K);
-
-
-   // indexed = is_wanted;
-
-   // // skip remaining
-   // if (global_skip_all) indexed = false;
-   // if (depth == mMaxDicVolDepth && is_wanted) 
-   // {
-   //    cout << "minimal number of cells needed: " << nbCalc << endl;
-   //    global_skip_all = true;
-   // }
-
-   // indexed = false;
-   // indexed = (depth < 1) ? true : false;
-   // indexed = (rand() % 50 == 0) ? true : false;
-   // if (depth > 15) indexed = false;
-
-   // if (depth == mpPeakList->active_depth && !mpPeakList->mis_exta_run)
-   // {
-   //    sum_PK_per_level[depth] += par0.P*K;
-   // }
-   // if (indexed) sum_passed_PK_per_level[depth] += par0.P*K;
-   // sum_PK_per_level[depth] += par0.P*K;
-   // ++calls_per_level[depth];
-
-   // assert(!(is_wanted && par0.P*K == 0));
-
-
-   // don't use here. move to dicvol
-   // mMaxDicVolDepth = ;
 
    unsigned int deeperSolutions=0;
 
@@ -3049,74 +2557,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
       pparent_info->PK_integral += PK_integral_max;
       // pparent_info->PK_integral +=  parent_info_new.PK_integral;
 
-
-     
-      //comment this to remove score computation
-      // if((deeperSolutions==0) &&(depth>=mDicVolDepthReport))
-      // {
-      //    mRecUnitCell=par0;
-      //    vector<float> par=mRecUnitCell.DirectUnitCell();
-      //    float score=Score(*mpPeakList,mRecUnitCell,mNbSpurious,false,true,false);
-      //    // If we already have enough reports at higher depths (depth+2), don't bother record this one
-      //    bool report=true;
-      //    if(depth<(mMaxDicVolDepth-1))
-      //       if(mvNbSolutionDepth[depth+2]>100)report=false;
-      //    if(report && (((score>(mMinScoreReport*.5))&&(depth>=mDicVolDepthReport)) || (depth>=mMaxDicVolDepth)))
-      //    {
-      //       if(false)//score>) mBestScore//((score>mMinScoreReport)||(depth>=mDicVolDepthReport))
-      //          cout<<__FILE__<<":"<<__LINE__<<" Depth="<<depth<<" (DIC) ! a="<<par[0]<<", b="<<par[1]<<", c="<<par[2]<<", alpha="
-      //             <<par[3]*RAD2DEG<<", beta="<<par[4]*RAD2DEG<<", gamma="<<par[5]*RAD2DEG<<", V="<<par[6]
-      //             <<", score="<<score<<endl;
-      //       // comment these lines to switch off optimization
-      //       // this->LSQRefine(5,true,true);
-      //       // // Re-score (may change to a better hkl indexing), and refine again
-      //       // score=Score(*mpPeakList,mRecUnitCell,mNbSpurious,false,true,false);
-      //       // this->LSQRefine(5,true,true);
-
-      //       par=mRecUnitCell.DirectUnitCell();
-      //       score=Score(*mpPeakList,mRecUnitCell,mNbSpurious,false,true,false);
-      //       if(  ((score>mMinScoreReport)||(depth>=mDicVolDepthReport))
-      //          &&((mvSolution.size()<50)||(score>(mBestScore/3)))
-      //          &&((mvSolution.size()<50)||(score>mMinScoreReport)))
-      //       {
-      //          if((score>(mBestScore))||((score>(mBestScore*0.8))&&(mvSolution.size()<50)))//||(rand()%100==0))
-      //          {
-      //             char buf[200];
-      //             {
-      //                RecUnitCell parm=par0,parp=par0;
-      //                for(unsigned int i=0;i<4;++i) {parm.par[i]-=dpar.par[i];parp.par[i]+=dpar.par[i];}
-      //                for(unsigned int i=4;i<7;++i) {parm.par[i]+=dpar.par[i];parp.par[i]-=dpar.par[i];}
-      //                vector<float> parmd=parm.DirectUnitCell();
-      //                vector<float> parpd=parp.DirectUnitCell();
-      //                sprintf(buf,"a=%5.2f-%5.2f b=%5.2f-%5.2f c=%5.2f-%5.2f alpha=%6.2f-%6.2f beta=%6.2f-%6.2f gamma=%6.2f-%6.2f V=%6.2f-%6.2f",
-      //                         parpd[0],parmd[0],parpd[1],parmd[1],parpd[2],parmd[2],parpd[3]*RAD2DEG,parmd[3]*RAD2DEG,
-      //                         parpd[4]*RAD2DEG,parmd[4]*RAD2DEG,parpd[5]*RAD2DEG,parmd[5]*RAD2DEG,parpd[6],parmd[6]);
-      //                for(unsigned int i = 0; i < depth; ++i)  cout << " ";
-      //
-      //                cout<<buf<<"level="<<depth<<", indexed="<<indexed<<"("<<mvSolution.size()<<" sol.)"<<endl;
-      //                sprintf(buf,"a=%7.5f-%7.5f b=%7.5f-%7.5f c=%7.5f-%7.5f alpha=%7.5f-%7.5f beta=%7.5f-%7.5f gamma=%7.5f-%7.5f",
-      //                         parp.par[1],parm.par[1],parp.par[2],parm.par[2],parp.par[3],parm.par[3],parp.par[4],parm.par[4],
-      //                         parp.par[5],parm.par[5],parp.par[6],parm.par[6]);
-      //                for(unsigned int i = 0; i < depth; ++i)  cout << " ";
-      //                cout<<buf<<"level="<<depth<<", indexed="<<indexed<<"("<<mvSolution.size()<<" sol.)"<<endl;
-      //             }
-      //             sprintf(buf," Solution ? a=%7.3f b=%7.3f c=%7.3f alpha=%7.3f beta=%7.3f gamma=%7.3f V=%8.2f score=%6.2f #%4lu",
-      //                     par[0],par[1],par[2],par[3]*RAD2DEG,par[4]*RAD2DEG,par[5]*RAD2DEG,par[6],score,mvSolution.size());
-      //             cout<<buf<<endl;
-      //             mBestScore=score;
-      //          }
-      //          mvSolution.push_back(make_pair(mRecUnitCell,score));
-      //          mvSolution.back().first.mNbSpurious = mNbSpurious;
-      //          mvNbSolutionDepth[depth]+=1;
-      //          if((mvSolution.size()>1100)&&(rand()%1000==0))
-      //          {
-      //             cout<<mvSolution.size()<<" solutions ! Redparing..."<<endl;
-      //             this->ReduceSolutions(true);// This will update the min report score
-      //             cout<<"-> "<<mvSolution.size()<<" remaining"<<endl;
-      //          }
-      //       }
-      //    }
-      // }
 
 
    }
@@ -3956,10 +3396,6 @@ void CellExplorer::AnalyzeLevel()
    mpPeakList->mvvis_good[active_depth].resize(pvPK->size());
    for (int i = 0; i != pvPK->size(); ++i)
    {
-      // if (active_depth == 1 && i == 37944) 
-      // {
-      //    cout << (*pvPK)[i] << endl;
-      // }
       mpPeakList->mvvis_good[active_depth][i] = (*pvPK)[i] > min_PK || ((*pvPK)[i] == min_PK && i < ancestor_size);
       sum_PK_per_level[active_depth] += mpPeakList->mvvPK[active_depth][i];
       if (mpPeakList->mvvis_good[active_depth][i])
@@ -3979,55 +3415,6 @@ void CellExplorer::AnalyzeLevel()
    cout << "active_depth: " << active_depth << "\nancestor_size: " << ancestor_size << endl;
    cout << "PK_min: " << min_PK << endl;
    cout << "Analyze level end" << endl;
-
-
-
-   // double max_passability = accumulate_PK(vcriterion_sorted, min(vcriterion_sorted.size(), max_ancestor_size))/sum_PK_all;
-   // double passability = -1;
-   // size_t ancestor_size = 0;
-   // if (active_depth == 0 || max_passability < mpPeakList->critical_passability)
-   // {
-   //    passability = max_passability;
-   //    mpPeakList->critical_passability = passability;
-   //    mpPeakList->critical_depth = active_depth;
-   //    ancestor_size = min(vcriterion_sorted.size(), max_ancestor_size);
-   // }
-   // else
-   // {
-   //    size_t reduced_ancestor_size = (1.0/pow(3, active_depth - mpPeakList->critical_depth) + 0.05)*max_ancestor_size;
-   //    double reduced_passability = accumulate_PK(vcriterion_sorted, min(vcriterion_sorted.size(), max_ancestor_size))/sum_PK_all;
-   //    if (reduced_passability < mpPeakList->critical_passability)
-   //    {
-   //       passability = mpPeakList->critical_passability;
-   //       double sum_PK_needed = passability*sum_PK_all;
-   //       double sum_PK = 0;
-   //       for(int count = 0; count != vcriterion_sorted.size(); ++count)
-   //       {
-   //          sum_PK += exp(0.002*vcriterion_sorted[count]);
-   //          if (sum_PK >= sum_PK_needed)
-   //          {
-   //             ancestor_size = count;
-   //             break;
-   //          }
-   //       }
-   //    }
-   //    else
-   //    {
-   //       passability = reduced_passability;
-   //       ancestor_size = reduced_ancestor_size;
-   //    }
-   // }
-   // short min_criterion = vcriterion_sorted[ancestor_size - 1];
-   // mpPeakList->mvvis_good[active_depth].resize(pvcriterion->size());
-   // for (int i = 0; i != pvcriterion->size(); ++i)
-   // {
-   //    mpPeakList->mvvis_good[active_depth][i] = (*pvcriterion)[i] >= min_criterion;
-   // }
-   // // number of ancestors does not exactly match ancestor_size, but probably close to it
-   // cout << __LINE__ << ": Analyze level start" << endl;
-   // cout << "active_depth: " << active_depth << "\nancestor_size: " << ancestor_size << endl;
-   // cout << "Analyze level end" << endl;
-   // cout << "PK_min: " << exp(0.002*min_criterion) << endl;
 
 }
 
@@ -4254,8 +3641,5 @@ void CellExplorer::LoadPrior()
 }
 
 
-/////////////////////////////////////////////////////// MY EXPERIMENTS ///////////////////////////////////////
-
-/////////////////////////////////////////////////////// END OF MY EXPERIMENTS ///////////////////////////////////////
 
 }//namespace
