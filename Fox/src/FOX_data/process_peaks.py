@@ -1,3 +1,5 @@
+"""A script for generating F, Rho arrays from peak positions and their standard deviations. Source for 'process_peaks' executable """
+
 import numpy as np
 from scipy.special import erf
 from scipy import integrate
@@ -6,7 +8,7 @@ import sys
 # import blur_rho
 # import converter
 
-# changed so that F includes visible peaks only
+# changed so that F includes only visible peaks
 # zero divisions not checked - be careful if see warning
 
 # class Pattern:

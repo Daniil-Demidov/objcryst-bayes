@@ -1,6 +1,11 @@
 {
-    "makefile.makeDirectory": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox",
+    "makefile.makeDirectory": "/home/daniil/x-ray/FOX/Fox-mod/objcryst-bayes/Fox",
+
     "makefile.configurations": [
+    {
+        "name": "Default",
+        "makeArgs": []
+    },
     {
         "name": "my_debug",
         "makeArgs": ["shared=1", "debug=1"]
@@ -25,8 +30,8 @@
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "makefile.launchConfigurations": [
         {
-            "cwd": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/my_folder",
-            "binaryPath": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/Fox-nogui",
+            "cwd": "${workspaceFolder}/my_folder",
+            "binaryPath": "${workspaceFolder}/Fox/src/Fox-nogui",
             "binaryArgs": [
                 "--my_index",
                 "exp_intervals.txt",
@@ -34,10 +39,15 @@
             ]
         },
         {
-            "cwd": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/",
-            "binaryPath": "/home/daniil/x-ray/FOX/Fox-mod/Fox-nogui-debug-vs/Fox/src/Fox",
+            "cwd": "${workspaceFolder}/Fox/src/",
+            "binaryPath": "${workspaceFolder}/Fox/src/Fox",
             "binaryArgs": []
         },
+        {
+            "cwd": "/home/daniil/x-ray/FOX/Fox-mod/objcryst-bayes/Fox/src",
+            "binaryPath": "/home/daniil/x-ray/FOX/Fox-mod/objcryst-bayes/Fox/src/Fox",
+            "binaryArgs": []
+        }
     ],
     "files.associations": {
         "cmath": "cpp",
