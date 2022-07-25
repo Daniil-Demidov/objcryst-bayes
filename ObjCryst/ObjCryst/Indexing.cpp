@@ -26,7 +26,7 @@
 #include <fstream>
 #include <cmath>
 
-// mine
+
 #include <sstream>
 // for debug
 #include <cassert>
@@ -59,33 +59,6 @@ using namespace std;
 namespace ObjCryst
 {
 
-//debug globals
-extern double global_p = 0.0;
-extern double global_pmax = 0.0;
-extern double global_pkmax = 0.0;
-extern double global_kmax = 0.0; // not overall
-
-extern double global_pk_integralmax = 0.0;
-
-
-extern long long global_check_inside_count = 0;
-extern long long global_is_inside_count = 0;
-
-extern bool global_skip_all = false;
-
-// just a variable to increment by anything so that compiler optimization is not possible
-extern float global_s = 0;
-
-// clean soon
-// extern float global_min_ratio = 1000;
-// extern float global_max_ratio = 0;
-
-vector<unsigned long> repeated_calls_per_level(20);
-
-vector<unsigned long> calls_per_level(20);
-vector<double> sum_PK_per_level(20);
-vector<double> sum_passed_PK_per_level(20);
-// end debug globals
 
 float EstimateCellVolume(const float dmin, const float dmax, const float nbrefl,
                          const CrystalSystem system,const CrystalCentering centering,const float kappa)
@@ -1608,24 +1581,24 @@ void CellExplorer::LSQRefine(int nbCycle, bool useLevenbergMarquardt, const bool
 * return false. Recommended to speed up triclinic, with nbMissingBelow5=5
 */
 
-bool check_wanted(const RecUnitCell &par,const RecUnitCell &dpar)
-{
-   //for debug - sample1. Only [1:5] are relevant
-   //optimized_cell
-   // REAL wanted_cell[7] = {-3.53719e-06, 0.117223, 0.1352, 0.0968922, 0.0233423, 0, 0};
-   //unoptimized best cell from Fox
-   // REAL wanted_cell[7] = {0, 0.11726, 0.135243, 0.0967941, 0.0228798, 0, 0};
-   //standard cell
-   // REAL wanted_cell[7] = {0, 0.11723810495687369, 0.13520463280123687, 0.09685758971154582, 0.023330625962932387, 0, 0};
-   // ghost K
-   REAL wanted_cell[7] = {0, 0.117239, 0.135195, 0.0968546, 0.0234302, 0, 0};
-   bool is_wanted = true;
-   for (int i = 1; i < 5; ++i)
-   {
-      if (abs(par.par[i] - wanted_cell[i]) > dpar.par[i]) return false;
-   }
-   return true;
-}
+// bool check_wanted(const RecUnitCell &par,const RecUnitCell &dpar)
+// {
+//    //for debug - sample1. Only [1:5] are relevant
+//    //optimized_cell
+//    // REAL wanted_cell[7] = {-3.53719e-06, 0.117223, 0.1352, 0.0968922, 0.0233423, 0, 0};
+//    //unoptimized best cell from Fox
+//    // REAL wanted_cell[7] = {0, 0.11726, 0.135243, 0.0967941, 0.0228798, 0, 0};
+//    //standard cell
+//    // REAL wanted_cell[7] = {0, 0.11723810495687369, 0.13520463280123687, 0.09685758971154582, 0.023330625962932387, 0, 0};
+//    // ghost K
+//    REAL wanted_cell[7] = {0, 0.117239, 0.135195, 0.0968546, 0.0234302, 0, 0};
+//    bool is_wanted = true;
+//    for (int i = 1; i < 5; ++i)
+//    {
+//       if (abs(par.par[i] - wanted_cell[i]) > dpar.par[i]) return false;
+//    }
+//    return true;
+// }
 
 // clean. useless if  pparent_info_old==0? If so, remove default
 ParentInfo make_parent_info(const PeakList &dhkl,  ParentInfo const * pparent_info_old)
@@ -1873,10 +1846,10 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
                   const unsigned int nbUnindexed=0,const bool verbose=false,unsigned int useStoredHKL=0,
                   const unsigned int maxNbMissingBelow5=0, double * pK=0, ParentInfo const * pparent_info=0, bool pseudo_correct = true)
 {
-   // for debug - sample1.
-   bool is_wanted = check_wanted(par, dpar);
-   if (is_wanted) cout << "new DichoIndexed" << endl;
-   //end debug
+   // // for debug - sample1.
+   // bool is_wanted = check_wanted(par, dpar);
+   // if (is_wanted) cout << "new DichoIndexed" << endl;
+   // //end debug
    // maximum dRho for a peak that we use in analysis. Corresponds to maximum Pa for an axis to be accounted in K
    double dRho_max = 1;
    const unsigned int nb=dhkl.GetPeakList().size();
@@ -1944,10 +1917,8 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
             // if (is_wanted)
             //    cout << (*ppthkl)->h << " " << (*ppthkl)->k << " " << (*ppthkl)->l << endl;
             PeakList::thkl * pthkl = *ppthkl;
-            ++global_check_inside_count;
             if((pos->d2obsmax >= pthkl->d2min) && (pthkl->d2max >= pos->d2obsmin))
             {
-               ++global_is_inside_count;
                if (!(pos->isIndexed))
                   --nbIndexed;
                pos->isIndexed = true;
@@ -2043,19 +2014,19 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
          // original
          K *= Ka_corr;
          // we assume Pa < 1 because dRho < 0.5
-         if (is_wanted)
-         {
-            int ax_number = pax - dhkl.vax.begin();
-            int num_peaks = pax->vthkl.size();
+         // if (is_wanted)
+         // {
+         //    int ax_number = pax - dhkl.vax.begin();
+         //    int num_peaks = pax->vthkl.size();
 
-            if (pax_info->P*Ky1 - Pz1*Kz1 <= -1.0e-15)
-            {
-               cout << "2479: strange probability:" << endl;
-               printf("Py*Ky=%f*%f=%f; Pz*Kz=%f*%f=%f\n", pax_info->P, Ky1, pax_info->P*Ky1, Pz1, Kz1, Pz1*Kz1);
-               assert(0);
-            }
-            // printf(", Pa*Ka=%f*%f=%f\n", Pa, Ka, Pa*Ka);
-         }
+         //    if (pax_info->P*Ky1 - Pz1*Kz1 <= -1.0e-15)
+         //    {
+         //       cout << "2479: strange probability:" << endl;
+         //       printf("Py*Ky=%f*%f=%f; Pz*Kz=%f*%f=%f\n", pax_info->P, Ky1, pax_info->P*Ky1, Pz1, Kz1, Pz1*Kz1);
+         //       assert(0);
+         //    }
+         //    // printf(", Pa*Ka=%f*%f=%f\n", Pa, Ka, Pa*Ka);
+         // }
       }
    }
    if(verbose)
@@ -2094,26 +2065,26 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
 
    mpPeakList->mvcount[depth]++;
    
-   bool is_wanted = check_wanted(par0, dpar);
+   // bool is_wanted = check_wanted(par0, dpar);
 
    bool is_final_run = (mpPeakList->active_depth == mMaxDicVolDepth);
 
-   if (is_wanted)
-   {
-      cout << endl << "new RDicVol, minV: " << minV << " depth: " << depth << endl;
-      cout << "number: " << mpPeakList->mvcount[depth] << endl;
-   }
+   // if (is_wanted)
+   // {
+   //    cout << endl << "new RDicVol, minV: " << minV << " depth: " << depth << endl;
+   //    cout << "number: " << mpPeakList->mvcount[depth] << endl;
+   // }
 
    if ((depth != mpPeakList->active_depth) && !mpPeakList->mvvis_good[depth][mpPeakList->mvcount[depth]])
    {  
-      if (is_wanted) cout << "not_calculated" << endl;
+      // if (is_wanted) cout << "not_calculated" << endl;
       if (depth > 0)
       {
          pparent_info->PK_integral += pparent_info->PK/pow(2.0, mnpar - 1);
       }
       return 0;
    }
-   if (is_wanted) cout << "calculated" << endl;
+   // if (is_wanted) cout << "calculated" << endl;
 
    // in case volume check will fail
    // mpPeakList->mvvcriterion[depth].push_back(-20000);
@@ -2313,11 +2284,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    {
       // check par0.P is not NAN
       assert(par0.P == par0.P);
-      if (par0.P == par0.P)
-      {
-         global_p += par0.P;
-         global_pmax = max(global_pmax, par0.P);
-      }
    }
 
 
@@ -2340,7 +2306,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    bool indexed = false;
    indexed=DichoIndexed(*mpPeakList,par0,dpar,mNbSpurious,localverbose,useStoredHKL,maxMissingBelow5, &K, pparent_info);
    if (!indexed) K = 0.0;
-   ++calls_per_level[depth];
    if (depth == mpPeakList->active_depth && !mpPeakList->mis_exta_run)
    {
       
@@ -2351,17 +2316,16 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    else
       {
          indexed = true;
-         ++repeated_calls_per_level[depth];
       }
 
-   if (is_wanted)
-   {
-      cout << endl <<"minV: " << minV << " depth: " << depth << endl;
-      cout << "main_block\n";
-      cout << "P: " << par0.P << endl;
-      cout << "K: " << K << endl;
-      cout << "PK: " << par0.P*K << endl;
-   }
+   // if (is_wanted)
+   // {
+   //    cout << endl <<"minV: " << minV << " depth: " << depth << endl;
+   //    cout << "main_block\n";
+   //    cout << "P: " << par0.P << endl;
+   //    cout << "K: " << K << endl;
+   //    cout << "PK: " << par0.P*K << endl;
+   // }
 
 
 
@@ -2444,11 +2408,6 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
    }
    */
    
-
-
-
-
-   global_pkmax = max(par0.P*K, global_pkmax);
 
 
    unsigned int deeperSolutions=0;
@@ -2592,15 +2551,12 @@ unsigned int CellExplorer::RDicVol(RecUnitCell par0,RecUnitCell dpar, unsigned i
 
    if (mpPeakList->mis_exta_run && depth == control_depth)
    {
-      if (indexed)
-      {
-         global_pk_integralmax = max(global_pk_integralmax, parent_info_new.PK_integral);
-      }
-      if (is_wanted)
-      {
-         cout << "wanted PK_integral for control depth: " << parent_info_new.PK_integral << endl;
-         cout << "wanted best K: " << parent_info_new.pbest_cell->second << endl;
-      }
+
+      // if (is_wanted)
+      // {
+      //    cout << "wanted PK_integral for control depth: " << parent_info_new.PK_integral << endl;
+      //    cout << "wanted best K: " << parent_info_new.pbest_cell->second << endl;
+      // }
    }
 
    if (!indexed) mpPeakList->clear_locals();
@@ -3071,44 +3027,7 @@ void CellExplorer::DicVol(const float minScore,const unsigned int minDepth,const
          cout<<"Finished: V="<<minv<<"->"<<maxv<<" A^3, "<<nbCalc
             <<" unit cells tested, "<<nbCalc/chrono.seconds()<<" tests/s,   Elapsed time="
             <<chrono.seconds()<<"s"<<endl;
-         //info-debug.
-         cout << "global_p: " << global_p << endl;
-         cout << "global_pmax: " << global_pmax << endl;
-         cout << "global_pkmax: " << global_pkmax << endl;
-         cout << "control depth global_pk_integralmax: " << global_pk_integralmax << endl;
-         cout << "global_kmax: " << global_kmax << endl;
-         double excess_ratio = (double)global_check_inside_count/global_is_inside_count;
-         cout << "global_check_inside_count/global_is_inside_count=" << global_check_inside_count << "/" << global_is_inside_count << "=" << excess_ratio << endl;
-         // cout << "global_min_ratio: " << global_min_ratio << endl;
-         // cout << "global_max_ratio: " << global_max_ratio << endl;
 
-         cout << "calls_per level:" << endl;
-         for (int level = 0; level < 20; ++level)
-         {
-            if (calls_per_level[level] == 0)
-               break;
-            cout << level << ": " << calls_per_level[level] << "; ";
-         }
-         cout << endl;
-         cout << "sum: " << accumulate(calls_per_level.begin(), calls_per_level.end(), 0) << endl;
-         cout << "repeated_calls_per level:" << endl;
-         for (int level = 0; level < 20; ++level)
-         {
-            if (calls_per_level[level] == 0)
-               break;
-            cout << level << ": " << repeated_calls_per_level[level] << "; ";
-         }
-         cout << endl;
-         cout << "sum: " << accumulate(repeated_calls_per_level.begin(), repeated_calls_per_level.end(), 0) << endl;
-         cout << "sum_passed_PK_per level/sum_PK_per level:" << endl;
-         for (int level = 0; level < 20; ++level)
-         {
-            double ratio = sum_passed_PK_per_level[level]/sum_PK_per_level[level];
-            if (sum_PK_per_level[level] == 0)
-               break;
-            cout << level << ": " << sum_passed_PK_per_level[level] << "/" << sum_PK_per_level[level] << "=" << ratio << "; ";
-         }
-         cout << endl;
          for(list<pair<RecUnitCell,double> >::iterator pos=mvSolution.begin();pos!=mvSolution.end();++pos)
          {
             const float score=pos->second;//Score(*mpPeakList,pos->first,mNbSpurious);
@@ -3174,13 +3093,10 @@ void CellExplorer::DicVol(const float minScore,const unsigned int minDepth,const
    //    vector<float> par=bestpos->first.DirectUnitCell();
    //    //my_debug
    //    // get reciprocal cell
-   //    cout << endl << "!!!!!mine"  << endl;
+   //    cout << endl;
    //    cout << "reciprocal unit cell parameters" << endl;
    //    for (int i = 0; i < 7; ++i)
    //       cout << i << ": " << (bestpos->first.par)[i] << endl;
-   //    // bad position
-   //    // cout <<"global_p: " << global_p << endl;
-   //    // cout <<"global_pkmax: " << global_pkmax << endl;
 
 
    //    cout<<__FILE__<<":"<<__LINE__<<" BEST ? a="<<par[0]<<", b="<<par[1]<<", c="<<par[2]
@@ -3399,11 +3315,6 @@ void CellExplorer::AnalyzeLevel()
    for (int i = 0; i != pvPK->size(); ++i)
    {
       mpPeakList->mvvis_good[active_depth][i] = (*pvPK)[i] > min_PK || ((*pvPK)[i] == min_PK && i < ancestor_size);
-      sum_PK_per_level[active_depth] += mpPeakList->mvvPK[active_depth][i];
-      if (mpPeakList->mvvis_good[active_depth][i])
-      {
-         sum_passed_PK_per_level[active_depth] += mpPeakList->mvvPK[active_depth][i];
-      }
    }
 
 
