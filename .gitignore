@@ -37,5 +37,5 @@ Fox/wikihtml
 *.pov
 boost_1_68_0
 GridRslt
-/Fox/src/FOX_data*
-
+/Fox/src/FOX_data/exp_intervals.txt
+/Fox/src/FOX_data/integrals.txt
