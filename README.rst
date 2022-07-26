@@ -40,7 +40,8 @@ Bayesian successive dichotomy indexing
 ======================================
 Indexing procedure in this fork of FOX is mostly identical to the original one except:
 1. Only advanced mode of indexing is currently working;
-2. The peak positions and standard uncertanties should be supplied in a space-separated (or tab-separated) two-column file. The file should be loaded via "Load peaks" item of powder pattern graph context menu. After loading it takes some time to run preliminary calculations.
+2. The peak positions (2θ) and standard uncertanties should be supplied in a space-separated (or tab-separated) two-column file. The file should be loaded via "Load peaks" item of powder pattern graph context menu. After loading it takes some time to run preliminary calculations.
+3. Instead of the maximum number of spurious lines, the calculation is controlled by specifying maximum number of calculations per level. The more calculations the more reliable the results will be.
 
 Viewing crystal structure, diffraction data and CIF files
 =========================================================

@@ -2035,7 +2035,9 @@ bool DichoIndexed(const PeakList &dhkl, const RecUnitCell &par,const RecUnitCell
    }
    if (pK != 0)
       *pK = K;
-   return nbIndexed<=0;
+   return true;
+   // unindexed lines analysis disabled
+   // return nbIndexed<=0;
 }
 
 double CellExplorer::GetBestScore()const{return mBestScore;}
